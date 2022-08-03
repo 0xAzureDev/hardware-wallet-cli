@@ -1,0 +1,53 @@
+{
+  "name": "hw",
+  "private": true,
+  "bin": "./src/index.ts",
+  "type": "module",
+  "scripts": {
+    "start": "ts-node-esm src/index.ts",
+    "old-start": "ts-node src/index.ts",
+    "clean": "rm -rf node_modules && npm install",
+    "local": "npm i -g ./ && hw",
+    "lint": "eslint . --fix"
+  },
+  "devDependencies": {
+    "@tsconfig/node16": "^1.0.3",
+    "@types/chalk": "^2.2.0",
+    "@types/clear": "^0.1.2",
+    "@types/commander": "^2.12.2",
+    "@types/figlet": "^1.5.4",
+    "@typescript-eslint/eslint-plugin": "^5.31.0",
+    "@typescript-eslint/parser": "^5.31.0",
+    "eslint": "^8.20.0",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-prettier": "^4.2.1",
+    "prettier": "^2.7.1",
+    "ts-node": "^8.10.2",
+    "typescript": "^4.7.4"
+  },
+  "dependencies": {
+    "@types/node": "^18.0.6",
+    "@xchainjs/xchain-bitcoin": "^0.19.0",
+    "@xchainjs/xchain-client": "^0.12.0",
+    "@xchainjs/xchain-crypto": "^0.2.6",
+    "@xchainjs/xchain-util": "^0.8.0",
+    "axios": "^0.27.2",
+    "chalk": "^4.1.2",
+    "clear": "^0.1.0",
+    "commander": "^9.4.0",
+    "each-async": "^2.0.0",
+    "ethers": "^5.6.9",
+    "figlet": "^1.5.2",
+    "node-fetch": "^3.2.9"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.{js,ts,tsx}": [
+      "eslint --fix"
+    ]
+  }  
+}
