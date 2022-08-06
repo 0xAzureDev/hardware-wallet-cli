@@ -1,12 +1,12 @@
-import { validateERC20 } from './../utils/validate';
-import { subheading } from './../utils/log';
 import { Client } from '@xchainjs/xchain-bitcoin';
-import { login } from '../utils/login';
-import { assetToBase, assetAmount, AssetBTC } from '@xchainjs/xchain-util';
 import { Network } from '@xchainjs/xchain-client';
-import { Chain } from '../types';
+import { assetAmount, AssetBTC, assetToBase } from '@xchainjs/xchain-util';
 import { ethers } from 'ethers';
-import { ERC20_ABI, EVM_RPC, BTC_MEMO } from '../constants';
+import { BTC_MEMO, ERC20_ABI, EVM_RPC } from '../constants';
+import { Chain } from '../types';
+import { login } from '../utils/login';
+import { subheading } from './../utils/log';
+import { validateERC20 } from './../utils/validate';
 
 const sendBtc = async (mnemonic: string, to: string, amount: number) => {
   // Create bitcoin client using @xchainjs/xchain-bitcoin
@@ -41,7 +41,7 @@ const sendBtc = async (mnemonic: string, to: string, amount: number) => {
 const sendEth = async (mnemonic: string, chain: Chain, to: string, amount: number) => {
   // Validate ETH send address otherwise, return error
   if (!validateERC20(to)) return subheading(`Invalid address ${to}`, false);
-  
+
   // Error checking
   if (chain === 'btc') return
 

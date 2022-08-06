@@ -1,4 +1,4 @@
-import { Keystore, generatePhrase, encryptToKeyStore, decryptFromKeystore } from '@xchainjs/xchain-crypto';
+import { decryptFromKeystore, encryptToKeyStore, generatePhrase, Keystore } from '@xchainjs/xchain-crypto';
 import fs from 'fs';
 
 /**

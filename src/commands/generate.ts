@@ -1,5 +1,5 @@
-import { subheading } from './../utils/log';
 import { encrypt } from '../utils/keystore';
+import { subheading } from './../utils/log';
 
 export const generate = async (password: string, path: string) => {
   // Checks if it is a json file otherwise, cast to json

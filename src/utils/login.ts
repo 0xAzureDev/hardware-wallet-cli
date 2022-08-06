@@ -1,6 +1,6 @@
 import { Keystore } from '@xchainjs/xchain-crypto';
-import { decrypt } from './keystore';
 import fs from 'fs';
+import { decrypt } from './keystore';
 
 /**
  * Takes in the file path and password and decrypts the keystore.

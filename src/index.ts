@@ -1,13 +1,13 @@
 #!/usr/bin/env node
 
-import { heading } from './utils/log';
-import { exit } from 'process';
 import { Command } from 'commander';
-import { generate } from './commands/generate';
+import { exit } from 'process';
 import { balance } from './commands/balance';
+import { generate } from './commands/generate';
 import { receive } from './commands/receive';
 import { send } from './commands/send';
 import { DEFAULT_PATH } from './constants';
+import { heading } from './utils/log';
 
 const program = new Command();
 

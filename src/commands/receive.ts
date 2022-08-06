@@ -1,9 +1,9 @@
-import { Chain } from './../types/index';
-import { login } from './../utils/login';
-import { body, subheading } from './../utils/log';
 import { Client } from '@xchainjs/xchain-bitcoin';
 import { Network } from '@xchainjs/xchain-client';
 import { ethers } from 'ethers';
+import { Chain } from './../types/index';
+import { body, subheading } from './../utils/log';
+import { login } from './../utils/login';
 
 const btcAddress = async (mnemonic: string) => {
   // Create BTC client using @xchainjs/xchain-bitcoin

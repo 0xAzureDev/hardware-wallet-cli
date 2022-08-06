@@ -1,10 +1,10 @@
-import { login } from './../utils/login';
-import { ethers } from 'ethers';
 import { Client } from '@xchainjs/xchain-bitcoin';
 import { Network } from '@xchainjs/xchain-client';
-import { ERC20_TOKENS, ERC20_ABI, EVM_RPC } from '../constants';
-import { subheading, body } from '../utils/log';
+import { ethers } from 'ethers';
+import { ERC20_ABI, ERC20_TOKENS, EVM_RPC } from '../constants';
 import { Chain } from '../types';
+import { body, subheading } from '../utils/log';
+import { login } from './../utils/login';
 
 const btcBalance = async (mnemonic: string) => {
   // Load the client
