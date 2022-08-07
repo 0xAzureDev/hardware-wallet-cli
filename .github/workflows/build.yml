@@ -15,10 +15,8 @@ jobs:
           cache: 'npm'
           cache-dependency-path: package-lock.json
       - name: Install dependencies
-        run: npm i --force
+        run: npm ci --force
       - name: Build the CLI locally
         run: npm run local
-      - name: Install Nodejs Legacy
-        run: sudo apt-get install nodejs-legacy
       - name: Check CLI version
-        run: hardware-wallet-cli -V
+        run: npx hardware-wallet-cli -V
