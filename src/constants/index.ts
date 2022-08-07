@@ -1,5 +1,5 @@
-import path from 'path';
-import { erc20_abi } from './abi';
+const path = require('path');
+const { erc20_abi } = require('./abi');
 
 export const EVM_RPC = {
   eth: 'https://eth-mainnet.public.blastapi.io',
@@ -14,7 +14,7 @@ export const ERC20_TOKENS = [
   {
     address: '0x8AC76a51cc950d9822D68b83fE1Ad97B32Cd580d',
     symbol: 'USDC', // BSC
-  }
+  },
 ];
 
 export const DEFAULT_PATH = path.join(path.resolve(), '..', 'keys/wallet.json');

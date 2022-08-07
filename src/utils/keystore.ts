@@ -1,5 +1,5 @@
-import { decryptFromKeystore, encryptToKeyStore, generatePhrase, Keystore } from '@xchainjs/xchain-crypto';
-import fs from 'fs';
+const { decryptFromKeystore, encryptToKeyStore, generatePhrase, Keystore } = require('@xchainjs/xchain-crypto');
+const fs = require('fs');
 
 /**
  * Generate & encrypt a new phrase.
@@ -8,12 +8,12 @@ import fs from 'fs';
  * @param {number} entropy The new phrase size.
  * @returns {Keystore} The generated encrypted phrase.
  */
-export const encrypt = async (password: string, path: string, entropy = 24): Promise<Keystore> => {
+export const encrypt = async (password: string, path: string, entropy = 24): Promise<typeof Keystore> => {
   const phrase = generatePhrase(entropy);
 
   console.log(`Generating new phrase: ${phrase}`);
 
-  const encrypted_phrase: Keystore = await encryptToKeyStore(phrase, password);
+  const encrypted_phrase: typeof Keystore = await encryptToKeyStore(phrase, password);
 
   if (path) fs.writeFileSync(path, JSON.stringify(encrypted_phrase));
 
@@ -27,7 +27,7 @@ export const encrypt = async (password: string, path: string, entropy = 24): Pro
  * @param {string} password The encryption password.
  * @returns {string} The decrypted phrase.
  */
-export const decrypt = async (keystore: Keystore, password: string): Promise<string> => {
+export const decrypt = async (keystore: typeof Keystore, password: string): Promise<string> => {
   try {
     const decryptedKeystore = await decryptFromKeystore(keystore, password);
     return decryptedKeystore;

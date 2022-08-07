@@ -1,4 +1,4 @@
-import { ethers } from 'ethers';
+const { ethers } = require('ethers');
 
 export const validateERC20 = (address: string) => {
   return ethers.utils.isAddress(address);

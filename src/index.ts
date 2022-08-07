@@ -1,70 +1,90 @@
-#!/usr/bin/env node
+#!/usr/bin/env ts-node
 
-import { Command } from 'commander';
-import { exit } from 'process';
-import { balance } from './commands/balance';
-import { generate } from './commands/generate';
-import { receive } from './commands/receive';
-import { send } from './commands/send';
-import { DEFAULT_PATH } from './constants';
-import { heading } from './utils/log';
+const { Command } = require('commander');
+const { exit } = require('process');
+const { balance } = require('./commands/balance');
+const { generate } = require('./commands/generate');
+const { receive } = require('./commands/receive');
+const { send } = require('./commands/send');
+const { DEFAULT_PATH } = require('./constants');
+const { heading } = require('./utils/log');
+const { Chain } = require('./types');
 
-const program = new Command();
+async function main() {
+  const program = new Command();
 
-heading('hardware-wallet-cli');
+  heading('hardware-wallet-cli');
 
-program.version('1.0.0').name('hw').description('CLI for creating, managing and using a pseudo hardware wallet');
+  program
+    .version('1.0.0')
+    .name('hardware-wallet-cli')
+    .description('CLI for creating, managing and using a pseudo hardware wallet');
 
-// hw generate --password <string> --file <string>(optional)
-program
-  .command('generate')
-  .description('generate a new phrase and encrypt it')
-  .requiredOption('-p, --password <string>', 'Password to encrypt the phrase')
-  .option('-f, --file <string>', 'File to store the encrypted phrase', DEFAULT_PATH)
-  .action(async (options) => {
-    await generate(options.password, options.file);
-  });
+  // hw generate --password <string> --file <string>(optional)
+  program
+    .command('generate')
+    .description('generate a new phrase and encrypt it')
+    .requiredOption('-p, --password <string>', 'Password to encrypt the phrase')
+    .option('-f, --file <string>', 'File to store the encrypted phrase', DEFAULT_PATH)
+    .action(async (options: { password: string; file: string }) => {
+      await generate(options.password, options.file);
+    });
 
-// hw send --to <address> --chain <Chain> --token <string> (optional) --amount <amount> --password <string> --file <string>(optional)
-program
-  .command('send')
-  .description('sends a token using the hardware wallet to another address')
-  .requiredOption('-t, --to <string>', 'Recipient address of the transfer')
-  .requiredOption('-c, --chain <Chain>', 'Chain to conduct the transfer on')
-  .option('-tk, --token <string>', 'Token to send, not required for native ETH and BTC transfers')
-  .requiredOption('-a, --amount <string>', 'Amount of asset to send')
-  .requiredOption('-p, --password <string>', 'Password to decrypt the phrase')
-  .option('-f, --file <string>', 'File to store the encrypted phrase', DEFAULT_PATH)
-  .action(async (options) => {
-    await send(options.to, options.chain, options.token, options.amount, options.password, options.file);
-  });
+  // hw send --to <address> --chain <Chain> --token <string> (optional) --amount <amount> --password <string> --file <string>(optional)
+  program
+    .command('send')
+    .description('sends a token using the hardware wallet to another address')
+    .requiredOption('-t, --to <string>', 'Recipient address of the transfer')
+    .requiredOption('-c, --chain <Chain>', 'Chain to conduct the transfer on')
+    .option('-tk, --token <string>', 'Token to send, not required for native ETH and BTC transfers')
+    .requiredOption('-a, --amount <string>', 'Amount of asset to send')
+    .requiredOption('-p, --password <string>', 'Password to decrypt the phrase')
+    .option('-f, --file <string>', 'File to store the encrypted phrase', DEFAULT_PATH)
+    .action(
+      async (options: {
+        to: string;
+        chain: typeof Chain;
+        token: string;
+        amount: number;
+        password: string;
+        file: string;
+      }) => {
+        await send(options.to, options.chain, options.token, options.amount, options.password, options.file);
+      },
+    );
 
-// hw receive --chain <string>(optional) --password <string> --file <string>(optional)
-program
-  .command('receive')
-  .description('receive a token using the hardware wallet')
-  .option('-c, --chain <Chain>', "Chain to receive the tokens, either 'btc' or 'eth'")
-  .requiredOption('-p, --password <string>', 'Password to decrypt the phrase')
-  .option('-f, --file <string>', 'File to store the encrypted phrase', DEFAULT_PATH)
-  .action(async (options) => {
-    await receive(options.chain, options.password, options.file);
-  });
+  // hw receive --chain <string>(optional) --password <string> --file <string>(optional)
+  program
+    .command('receive')
+    .description('receive a token using the hardware wallet')
+    .option('-c, --chain <Chain>', "Chain to receive the tokens, either 'btc' or 'eth'")
+    .requiredOption('-p, --password <string>', 'Password to decrypt the phrase')
+    .option('-f, --file <string>', 'File to store the encrypted phrase', DEFAULT_PATH)
+    .action(async (options: { chain: typeof Chain; password: string; file: string }) => {
+      await receive(options.chain, options.password, options.file);
+    });
 
-// hw balance --chain <string>(optional) --password <string> --file <string>(optional)
-program
-  .command('balance')
-  .description('check the balance of a token using the hardware wallet')
-  .option('-c, --chain <Chain>', "Chain to check available tokens, either 'btc' or 'eth'")
-  .requiredOption('-p, --password <string>', 'Password to decrypt the phrase')
-  .option('-f, --file <string>', 'File to store the encrypted phrase', DEFAULT_PATH)
-  .action(async (options) => {
-    await balance(options.chain, options.password, options.file);
-  });
+  // hw balance --chain <string>(optional) --password <string> --file <string>(optional)
+  program
+    .command('balance')
+    .description('check the balance of a token using the hardware wallet')
+    .option('-c, --chain <Chain>', "Chain to check available tokens, either 'btc' or 'eth'")
+    .requiredOption('-p, --password <string>', 'Password to decrypt the phrase')
+    .option('-f, --file <string>', 'File to store the encrypted phrase', DEFAULT_PATH)
+    .action(async (options: { chain: typeof Chain; password: string; file: string }) => {
+      await balance(options.chain, options.password, options.file);
+    });
 
-program.parse();
+  program.parse();
 
-// If no option is selected
-if (!process.argv.slice(2).length) {
-  program.outputHelp();
-  exit();
+  // If no option is selected
+  if (!process.argv.slice(2).length) {
+    program.outputHelp();
+    exit();
+  }
 }
+
+main().catch((err) => {
+  console.error(err);
+  exit(1);
+});

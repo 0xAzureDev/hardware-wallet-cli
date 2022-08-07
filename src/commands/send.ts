@@ -1,12 +1,12 @@
-import { Client } from '@xchainjs/xchain-bitcoin';
-import { Network } from '@xchainjs/xchain-client';
-import { assetAmount, AssetBTC, assetToBase } from '@xchainjs/xchain-util';
-import { ethers } from 'ethers';
-import { BTC_MEMO, ERC20_ABI, EVM_RPC } from '../constants';
-import { Chain } from '../types';
-import { login } from '../utils/login';
-import { subheading } from './../utils/log';
-import { validateERC20 } from './../utils/validate';
+const { Client } = require('@xchainjs/xchain-bitcoin');
+const { Network } = require('@xchainjs/xchain-client');
+const { assetAmount, AssetBTC, assetToBase } = require('@xchainjs/xchain-util');
+const { ethers } = require('ethers');
+const { BTC_MEMO, ERC20_ABI, EVM_RPC } = require('../constants');
+const { Chain } = require('../types');
+const { login } = require('../utils/login');
+const { subheading } = require('./../utils/log');
+const { validateERC20 } = require('./../utils/validate');
 
 const sendBtc = async (mnemonic: string, to: string, amount: number) => {
   // Create bitcoin client using @xchainjs/xchain-bitcoin
@@ -38,12 +38,12 @@ const sendBtc = async (mnemonic: string, to: string, amount: number) => {
   }
 };
 
-const sendEth = async (mnemonic: string, chain: Chain, to: string, amount: number) => {
+const sendEth = async (mnemonic: string, chain: typeof Chain, to: string, amount: number) => {
   // Validate ETH send address otherwise, return error
   if (!validateERC20(to)) return subheading(`Invalid address ${to}`, false);
 
   // Error checking
-  if (chain === 'btc') return
+  if (chain === 'btc') return;
 
   // Generate wallet w/ provider
   const provider = new ethers.providers.JsonRpcProvider(EVM_RPC[chain]);
@@ -81,13 +81,13 @@ const sendEth = async (mnemonic: string, chain: Chain, to: string, amount: numbe
   }
 };
 
-const sendToken = async (mnemonic: string, chain: Chain, to: string, token: string, amount: number) => {
+const sendToken = async (mnemonic: string, chain: typeof Chain, to: string, token: string, amount: number) => {
   // Checks to validate, to and token address
   if (!token) return subheading(`Please input a token address to send`, false);
   if (!validateERC20(to)) return subheading(`Invalid address ${to}`, false);
   if (!validateERC20(token)) return subheading(`Invalid token ${token}`, false);
   // Error checking
-  if (chain === 'btc') return
+  if (chain === 'btc') return;
 
   const provider = new ethers.providers.JsonRpcProvider(EVM_RPC[chain]);
   const signer = ethers.Wallet.fromMnemonic(mnemonic);
@@ -125,7 +125,14 @@ const sendToken = async (mnemonic: string, chain: Chain, to: string, token: stri
   }
 };
 
-export const send = async (to: string, chain: Chain, token: string, amount: number, password: string, file: string) => {
+export const send = async (
+  to: string,
+  chain: typeof Chain,
+  token: string,
+  amount: number,
+  password: string,
+  file: string,
+) => {
   // NOTE not working for some reason
   // if (!Number.isInteger(amount)) return subheading(`Please input a valid amount`, false);
 

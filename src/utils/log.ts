@@ -1,6 +1,6 @@
-import chalk from 'chalk';
-import clear from 'clear';
-import figlet from 'figlet';
+const chalk = require('chalk');
+const clear = require('clear');
+const figlet = require('figlet');
 
 export const heading = (text: string) => {
   clear();

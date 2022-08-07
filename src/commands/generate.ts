@@ -1,5 +1,5 @@
-import { encrypt } from '../utils/keystore';
-import { subheading } from './../utils/log';
+const { encrypt } = require('../utils/keystore');
+const { subheading } = require('./../utils/log');
 
 export const generate = async (password: string, path: string) => {
   // Checks if it is a json file otherwise, cast to json

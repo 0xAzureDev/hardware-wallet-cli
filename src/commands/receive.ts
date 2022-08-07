@@ -1,9 +1,15 @@
-import { Client } from '@xchainjs/xchain-bitcoin';
-import { Network } from '@xchainjs/xchain-client';
-import { ethers } from 'ethers';
-import { Chain } from './../types/index';
-import { body, subheading } from './../utils/log';
-import { login } from './../utils/login';
+// import { Client } from '@xchainjs/xchain-bitcoin';
+// import { Network } from '@xchainjs/xchain-client';
+// import { ethers } from 'ethers';
+// import { Chain } from './../types/index';
+// import { body, subheading } from './../utils/log';
+// import { login } from './../utils/login';
+const { Client } = require('@xchainjs/xchain-bitcoin');
+const { Network } = require('@xchainjs/xchain-client');
+const { ethers } = require('ethers');
+const { Chain } = require('./../types/index');
+const { body, subheading } = require('./../utils/log');
+const { login } = require('./../utils/login');
 
 const btcAddress = async (mnemonic: string) => {
   // Create BTC client using @xchainjs/xchain-bitcoin
@@ -23,7 +29,7 @@ const ethAddress = async (mnemonic: string) => {
   body(wallet.address);
 };
 
-export const receive = async (chain: Chain, password: string, path: string) => {
+export const receive = async (chain: typeof Chain, password: string, path: string) => {
   const mnemonic = await login(password, path);
 
   if (chain === 'btc') return await btcAddress(mnemonic);

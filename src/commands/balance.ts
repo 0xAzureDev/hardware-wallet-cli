@@ -1,10 +1,10 @@
-import { Client } from '@xchainjs/xchain-bitcoin';
-import { Network } from '@xchainjs/xchain-client';
-import { ethers } from 'ethers';
-import { ERC20_ABI, ERC20_TOKENS, EVM_RPC } from '../constants';
-import { Chain } from '../types';
-import { body, subheading } from '../utils/log';
-import { login } from './../utils/login';
+const Client = require('@xchainjs/xchain-bitcoin');
+const { Network } = require('@xchainjs/xchain-client');
+const { ethers } = require('ethers');
+const { ERC20_ABI, ERC20_TOKENS, EVM_RPC } = require('../constants');
+const { Chain } = require('../types/index');
+const { body, subheading } = require('../utils/log');
+const { login } = require('./../utils/login');
 
 const btcBalance = async (mnemonic: string) => {
   // Load the client
@@ -19,9 +19,9 @@ const btcBalance = async (mnemonic: string) => {
   body(`BTC ${balance[0].amount.amount().toNumber() / 10 ** 8}`);
 };
 
-const ethBalance = async (mnemonic: string, chain: Chain = 'eth') => {
+const ethBalance = async (mnemonic: string, chain: typeof Chain = 'eth') => {
   // Error checking
-  if (chain === 'btc') return
+  if (chain === 'btc') return;
 
   // Load the wallet
   const provider = new ethers.providers.JsonRpcProvider(EVM_RPC[chain]);
@@ -47,7 +47,7 @@ const ethBalance = async (mnemonic: string, chain: Chain = 'eth') => {
   }
 };
 
-export const balance = async (chain: Chain, password: string, path: string) => {
+export const balance = async (chain: typeof Chain, password: string, path: string) => {
   const mnemonic = await login(password, path);
 
   if (chain === 'btc') return await btcBalance(mnemonic);
