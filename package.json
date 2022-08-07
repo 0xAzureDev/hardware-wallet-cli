@@ -23,7 +23,7 @@
   "scripts": {
     "start": "ts-node src/index.ts",
     "clean": "rm -rf node_modules && npm install",
-    "local": "npm i -g ./ && hardware-wallet-cli",
+    "local": "npm i -g ./",
     "lint": "eslint . --fix"
   },
   "devDependencies": {
