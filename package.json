@@ -1,9 +1,25 @@
 {
   "name": "hardware-wallet-cli",
-  "version": "0.1.2",
+  "version": "0.1.0",
   "description": "CLI for creating, managing and using a pseudo hardware wallet",
   "author": "0xAzureDev",
   "bin": "./src/index.ts",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/0xAzureDev/hardware-wallet-cli.git"
+  },
+  "homepage": "https://github.com/0xAzureDev/hardware-wallet-cli#readme",
+  "license": "MIT",
+  "keywords": [
+    "hardware-wallet",
+    "wallet",
+    "cli",
+    "ledger",
+    "ledger-cli",
+    "ledger-wallet",
+    "cryptocurrency"
+  ],
+  "type": "commonjs",
   "scripts": {
     "start": "ts-node src/index.ts",
     "clean": "rm -rf node_modules && npm install",
